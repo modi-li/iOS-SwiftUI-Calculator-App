@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  iOS-SwiftUI-Calculator-App
 //
-//  Created by Modi (Victor) Li
+//  Created by Modi (Victor) Li.
 //
 
 import SwiftUI
@@ -64,13 +64,13 @@ enum CalculatorButton {
     var backgroundColor: Color {
         switch self {
         case .dot, .zero, .one, .two, .three, .four, .five, .six, .seven, .eight, .nine:
-            return Colors.tint1
+            return .tint1
         case .equals:
-            return Colors.tint2
+            return .tint2
         case .plus, .minus, .multiply, .divide:
-            return Colors.tint3
+            return .tint3
         case .ac, .plusMinus, .percent:
-            return Colors.tint4
+            return .tint4
         }
     }
     
@@ -90,115 +90,9 @@ enum CalculatorButton {
 }
 
 
-class GlobalEnvironment: ObservableObject {
-    
-    @Published var display: String = "0"
-    
-    @Published var shouldUseAC: Bool = true
-    @Published var highlightedArithmeticOperator: CalculatorButton? = nil
-    
-    var previousValue: Double? = nil
-    var currentValue: Double = 0
-    var currentOperator: CalculatorButton? = nil
-    var enteringNewOperand = false
-    
-    func buttonTapped(button: CalculatorButton) {
-        switch button {
-        case .dot, .zero, .one, .two, .three, .four, .five, .six, .seven, .eight, .nine:
-            if enteringNewOperand {
-                display += button.title!
-                currentValue = Double(display)!
-            } else if button == .dot {
-                display += button.title!
-                currentValue = Double(display)!
-                enteringNewOperand = true
-            } else {
-                display = button.title!
-                currentValue = button.value!
-                enteringNewOperand = true
-            }
-            shouldUseAC = false
-            highlightedArithmeticOperator = nil
-        case .equals:
-            if previousValue != nil {
-                let newValue = calculateValue(operator_: currentOperator!, operand1: previousValue!, operand2: currentValue)
-                display = getDisplayFromValue(newValue)
-                previousValue = nil
-                currentValue = newValue
-                currentOperator = nil
-                enteringNewOperand = false
-                shouldUseAC = false
-            }
-        case .plus, .minus, .multiply, .divide:
-            previousValue = currentValue
-            currentValue = 0
-            currentOperator = button
-            enteringNewOperand = false
-            highlightedArithmeticOperator = button
-        case .ac:
-            if shouldUseAC {
-                allClear()
-            } else {
-                clear()
-            }
-        case .plusMinus:
-            currentValue = -currentValue
-            display = getDisplayFromValue(currentValue)
-            shouldUseAC = false
-        case .percent:
-            currentValue = 0.01 * currentValue
-            display = getDisplayFromValue(currentValue)
-            enteringNewOperand = false
-            shouldUseAC = false
-        }
-    }
-    
-    func getDisplayFromValue(_ value: Double) -> String {
-        if floor(value) == value {
-            return String(Int(value))
-        } else {
-            return String(value)
-        }
-    }
-    
-    func calculateValue(operator_: CalculatorButton, operand1: Double, operand2: Double) -> Double {
-        switch operator_ {
-        case .plus:
-            return operand1 + operand2
-        case .minus:
-            return operand1 - operand2
-        case .multiply:
-            return operand1 * operand2
-        case .divide:
-            return operand1 / operand2
-        default:
-            return 0
-        }
-    }
-    
-    func allClear() {
-        display = "0"
-        currentValue = 0
-        previousValue = nil
-        currentOperator = nil
-        enteringNewOperand = false
-        shouldUseAC = true
-        highlightedArithmeticOperator = nil
-    }
-    
-    func clear() {
-        currentValue = 0
-        display = getDisplayFromValue(currentValue)
-        enteringNewOperand = false
-        shouldUseAC = true
-    }
-    
-}
-
-
 struct ContentView: View {
     
-    @EnvironmentObject var env: GlobalEnvironment
+    @Environment(GlobalEnvironment.self) private var globalEnvironment
     
     let buttons: [[CalculatorButton]] = [
         [.ac, .plusMinus, .percent, .divide],
@@ -215,7 +109,7 @@ struct ContentView: View {
             VStack(spacing: 12) {
                 HStack {
                     Spacer()
-                    Text(env.display)
+                    Text(globalEnvironment.display)
                         .lineLimit(1)
                         .font(.system(size: 70))
                         .bold()
@@ -233,13 +127,12 @@ struct ContentView: View {
             }
         }
     }
-    
 }
 
 
 struct CalculatorButtonView: View {
     
-    @EnvironmentObject var env: GlobalEnvironment
+    @Environment(GlobalEnvironment.self) private var globalEnvironment
     
     var button: CalculatorButton
     
@@ -247,7 +140,7 @@ struct CalculatorButtonView: View {
     
     var body: some View {
         Button {
-            env.buttonTapped(button: button)
+            globalEnvironment.buttonTapped(button: button)
         } label: {
             if button.title == nil {
                 Image(systemName: button.imageSystemName!)
@@ -269,7 +162,7 @@ struct CalculatorButtonView: View {
     
     var buttonTitle: String {
         if button == .ac {
-            return env.shouldUseAC ? "AC" : "C"
+            return globalEnvironment.shouldUseAC ? "AC" : "C"
         } else {
             return button.title!
         }
@@ -288,25 +181,25 @@ struct CalculatorButtonView: View {
     }
     
     var buttonForegroundColor: Color {
-        if button == env.highlightedArithmeticOperator {
-            return Colors.tint2
+        if button == globalEnvironment.highlightedArithmeticOperator {
+            return .tint2
         } else {
             return .white
         }
     }
     
     var buttonBackgroundColor: Color {
-        if button == env.highlightedArithmeticOperator {
+        if button == globalEnvironment.highlightedArithmeticOperator {
             return .white
         } else {
             return button.backgroundColor
         }
     }
-    
 }
 
 
 #Preview {
+    @Previewable @State var globalEnvironment = GlobalEnvironment()
     ContentView()
-        .environmentObject(GlobalEnvironment())
+        .environment(globalEnvironment)
 }

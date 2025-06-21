@@ -13,7 +13,8 @@
 		D55B73342C4028A500028011 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D55B73332C4028A500028011 /* Preview Assets.xcassets */; };
 		D55B733C2C40314C00028011 /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B733B2C40314C00028011 /* UIWindow+Extension.swift */; };
 		D55B733E2C40315700028011 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B733D2C40315700028011 /* UIScreen+Extension.swift */; };
-		D55B73402C41B33300028011 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B733F2C41B33300028011 /* Colors.swift */; };
+		D5FAA0232E073B890051927E /* GlobalEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FAA0222E073B840051927E /* GlobalEnvironment.swift */; };
+		D5FAA04D2E0744380051927E /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FAA04C2E0744350051927E /* Color+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +25,8 @@
 		D55B73332C4028A500028011 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D55B733B2C40314C00028011 /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
 		D55B733D2C40315700028011 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
-		D55B733F2C41B33300028011 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		D5FAA0222E073B840051927E /* GlobalEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalEnvironment.swift; sourceTree = "<group>"; };
+		D5FAA04C2E0744350051927E /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,12 +59,13 @@
 		D55B73292C4028A400028011 /* iOS-SwiftUI-Calculator-App */ = {
 			isa = PBXGroup;
 			children = (
+				D5FAA04C2E0744350051927E /* Color+Extension.swift */,
+				D5FAA0222E073B840051927E /* GlobalEnvironment.swift */,
 				D55B733A2C40313600028011 /* Extensions */,
 				D55B732A2C4028A400028011 /* iOS_SwiftUI_Calculator_App.swift */,
 				D55B732C2C4028A400028011 /* ContentView.swift */,
 				D55B73302C4028A500028011 /* Assets.xcassets */,
 				D55B73322C4028A500028011 /* Preview Content */,
-				D55B733F2C41B33300028011 /* Colors.swift */,
 			);
 			path = "iOS-SwiftUI-Calculator-App";
 			sourceTree = "<group>";
@@ -155,9 +158,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D55B732D2C4028A400028011 /* ContentView.swift in Sources */,
-				D55B73402C41B33300028011 /* Colors.swift in Sources */,
+				D5FAA04D2E0744380051927E /* Color+Extension.swift in Sources */,
 				D55B733E2C40315700028011 /* UIScreen+Extension.swift in Sources */,
 				D55B733C2C40314C00028011 /* UIWindow+Extension.swift in Sources */,
+				D5FAA0232E073B890051927E /* GlobalEnvironment.swift in Sources */,
 				D55B732B2C4028A400028011 /* iOS_SwiftUI_Calculator_App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
